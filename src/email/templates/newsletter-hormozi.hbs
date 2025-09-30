@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{subject}}</title>
+  <style type="text/css">
+    /* Import Inter font */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+  </style>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.6; color: #000000;">
+  <!-- Preview text -->
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    {{previewText}}
+  </div>
+  
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr>
+      <td style="padding: 20px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" style="margin: 0 auto; max-width: 600px;">
+          
+          <!-- Content -->
+          <tr>
+            <td style="padding: 20px; background-color: #ffffff;">
+              {{{content}}}
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 30px 20px; text-align: center; background-color: #f8f9fa; border-top: 1px solid #e0e0e0;">
+              <p style="font-size: 13px; color: #666666; margin: 0 0 8px 0; line-height: 1.5;">
+                {{companyName}}, {{companyAddress}}
+              </p>
+              <p style="font-size: 11px; color: #999999; margin: 16px 0 0 0; line-height: 1.6;">
+                This message, including any hypothetical scenarios, is for informational and illustrative purposes only and does not constitute professional advice. These scenarios are hypothetical and do not guarantee any specific outcome or past performance. Individual results will vary based on effort and external factors. We make no promises or guarantees regarding your success or income.
+              </p>
+              <p style="font-size: 12px; color: #666666; margin: 16px 0 0 0;">
+                <a href="{{unsubscribeLink}}" style="color: #666666; text-decoration: underline;">Unsubscribe</a>
+              </p>
+              <p style="font-size: 11px; color: #999999; margin: 12px 0 0 0; line-height: 1.6;">
+                Individual successes are influenced by personal abilities, market conditions, and other external factors. We assume no responsibility for decisions or actions taken based on this email's content. Always consult qualified professionals before making significant business decisions.
+              </p>
+            </td>
+          </tr>
+          
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

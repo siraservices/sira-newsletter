@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsletter Preview</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .metadata {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 4px;
+    }
+
+    .metadata-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .metadata-label {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .metadata-value {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .metadata-value.warning {
+      color: #f57c00;
+    }
+
+    .metadata-value.good {
+      color: #2e7d32;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .btn-primary {
+      background: #0066cc;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #0052a3;
+    }
+
+    .btn-secondary {
+      background: #e0e0e0;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background: #d0d0d0;
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c82333;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .preview-panel {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      background: #f8f9fa;
+      padding: 15px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      font-weight: 600;
+    }
+
+    .panel-content {
+      padding: 20px;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .plain-text {
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #0066cc;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #2e7d32;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: none;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      display: block;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .toast.error {
+      background: #dc3545;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .preview-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📰 Newsletter Preview</h1>
+    <div id="metadata" class="metadata"></div>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="approveAndSend()">✅ Approve & Send</button>
+      <button class="btn btn-secondary" onclick="window.location.reload()">🔄 Refresh</button>
+      <button class="btn btn-danger" onclick="cancel()">❌ Cancel</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Loading preview...</p>
+    </div>
+
+    <div id="preview-grid" class="preview-grid" style="display: none;">
+      <div class="preview-panel">
+        <div class="panel-header">HTML Preview</div>
+        <div class="panel-content">
+          <iframe id="html-preview" style="width: 100%; min-height: 800px; border: none;"></iframe>
+        </div>
+      </div>
+
+      <div class="preview-panel">
+        <div class="panel-header">Plain Text Version</div>
+        <div class="panel-content">
+          <pre id="plain-text-preview" class="plain-text"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    let currentDraft = null;
+
+    async function loadPreview() {
+      try {
+        const response = await fetch('/api/draft');
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.error);
+        }
+
+        currentDraft = data.draft;
+        displayPreview(currentDraft);
+      } catch (error) {
+        showToast('Failed to load preview: ' + error.message, 'error');
+      }
+    }
+
+    function displayPreview(draft) {
+      // Update metadata
+      const metadata = document.getElementById('metadata');
+      metadata.innerHTML = `
+        <div class="metadata-item">
+          <div class="metadata-label">Subject</div>
+          <div class="metadata-value ${draft.metadata.subjectLength > 60 ? 'warning' : 'good'}">
+            ${draft.metadata.subject} (${draft.metadata.subjectLength} chars)
+          </div>
+        </div>
+        <div class="metadata-item">
+          <div class="metadata-label">Preview Text</div>
+          <div class="metadata-value ${draft.metadata.previewTextLength > 100 ? 'warning' : 'good'}">
+            ${draft.metadata.previewText || 'Not set'} (${draft.metadata.previewTextLength} chars)
+          </div>
+        </div>
+        <div class="metadata-item">
+          <div class="metadata-label">Word Count</div>
+          <div class="metadata-value">${draft.metadata.wordCount} words</div>
+        </div>
+        <div class="metadata-item">
+          <div class="metadata-label">Read Time</div>
+          <div class="metadata-value">${draft.metadata.estimatedReadTime} min</div>
+        </div>
+        <div class="metadata-item">
+          <div class="metadata-label">Citations</div>
+          <div class="metadata-value">${draft.citations?.length || 0}</div>
+        </div>
+      `;
+
+      // Display HTML preview
+      const iframe = document.getElementById('html-preview');
+      iframe.srcdoc = draft.htmlPreview;
+
+      // Display plain text
+      document.getElementById('plain-text-preview').textContent = draft.plainTextPreview;
+
+      // Hide loading, show preview
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('preview-grid').style.display = 'grid';
+    }
+
+    async function approveAndSend() {
+      if (!confirm('Are you sure you want to send this newsletter?')) {
+        return;
+      }
+
+      showToast('Sending newsletter...', 'info');
+
+      try {
+        const response = await fetch('/api/approve', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showToast('✅ Newsletter sent successfully!', 'success');
+          setTimeout(() => {
+            window.close();
+          }, 2000);
+        } else {
+          throw new Error(data.error);
+        }
+      } catch (error) {
+        showToast('Failed to send: ' + error.message, 'error');
+      }
+    }
+
+    async function cancel() {
+      if (!confirm('Cancel this preview?')) {
+        return;
+      }
+
+      await fetch('/api/cancel', { method: 'POST' });
+      window.close();
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast show ' + type;
+      
+      setTimeout(() => {
+        toast.className = 'toast';
+      }, 3000);
+    }
+
+    // Load preview on page load
+    loadPreview();
+  </script>
+</body>
+</html>

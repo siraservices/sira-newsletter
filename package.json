@@ -1,0 +1,49 @@
+{
+  "name": "newsletter-automation",
+  "version": "1.0.0",
+  "description": "AI-powered newsletter generation system with automated scheduling",
+  "main": "src/cli/trigger.js",
+  "type": "module",
+  "scripts": {
+    "generate": "node src/cli/trigger.js",
+    "preview": "node src/preview/server.js",
+    "test-send": "node src/email/test-send.js",
+    "auth": "node src/email/setup-auth.js",
+    "schedule": "node src/scheduler/cron.js",
+    "test": "node src/test/integration.js",
+    "test-ollama": "node src/test/test-ollama.js",
+    "setup": "node scripts/install.js"
+  },
+  "keywords": [
+    "newsletter",
+    "ai",
+    "automation",
+    "gmail",
+    "anthropic",
+    "claude",
+    "email-marketing"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.0",
+    "axios": "^1.7.7",
+    "chalk": "^5.3.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "googleapis": "^144.0.0",
+    "handlebars": "^4.7.8",
+    "inquirer": "^11.0.2",
+    "marked": "^14.1.2",
+    "node-cron": "^3.0.3",
+    "open": "^10.1.0",
+    "ora": "^8.1.0",
+    "winston": "^3.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}

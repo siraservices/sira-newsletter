@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="supported-color-schemes" content="light dark" />
+  <title>{{subject}}</title>
+  <style type="text/css">
+    /* Import Inter font */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    
+    /* Reset styles */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    body { margin: 0; padding: 0; width: 100% !important; height: 100% !important; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      .email-container { background-color: #1a1a1a !important; }
+      .content-wrapper { background-color: #2d2d2d !important; color: #ffffff !important; }
+      .text-block { color: #e0e0e0 !important; }
+      .section-title { color: #ffffff !important; }
+      .footer { background-color: #1a1a1a !important; color: #a0a0a0 !important; }
+      .citation-item { background-color: #3a3a3a !important; border-left-color: #4a9eff !important; }
+    }
+
+    /* Typography */
+    .heading { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 700; line-height: 1.2; margin: 0; }
+    .text-block { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333333; margin: 0 0 16px 0; }
+    
+    /* Button */
+    .cta-button { background-color: #0066cc; border-radius: 4px; color: #ffffff; display: inline-block; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 1; padding: 14px 28px; text-decoration: none; text-align: center; }
+    .cta-button:hover { background-color: #0052a3; }
+
+    /* Mobile responsive */
+    @media only screen and (max-width: 600px) {
+      .email-container { width: 100% !important; }
+      .content-wrapper { padding: 20px !important; }
+      .heading { font-size: 24px !important; }
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f4f4;">
+  <!-- Preview text (hidden from view) -->
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    {{previewText}}
+  </div>
+  
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f4f4f4;" class="email-container">
+    <tr>
+      <td style="padding: 40px 20px;">
+        
+        <!-- Main content container -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" style="margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" class="content-wrapper">
+          
+          <!-- Header -->
+          <tr>
+            <td style="padding: 40px 40px 20px 40px;">
+              <h1 class="heading" style="font-size: 32px; color: #1a1a1a; margin-bottom: 16px;">
+                {{subject}}
+              </h1>
+              <p class="text-block" style="color: #666666; font-size: 14px; margin-bottom: 8px;">
+                {{date}}
+              </p>
+              <p style="font-size: 12px; color: #999999; font-style: italic; margin: 0 0 0 0; text-align: left;">
+                This newsletter was generated with AI
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Newsletter content -->
+          <tr>
+            <td style="padding: 0 40px 40px 40px;">
+              <div class="newsletter-content">
+                {{{content}}}
+              </div>
+            </td>
+          </tr>
+          
+          <!-- Citations (if any) -->
+          {{#if citations}}
+          <tr>
+            <td style="padding: 0 40px 30px 40px;">
+              <div style="border-top: 2px solid #e0e0e0; padding-top: 20px;">
+                <h3 class="section-title" style="font-size: 18px; color: #1a1a1a; margin-bottom: 12px;">
+                  References
+                </h3>
+                {{#each citations}}
+                <div class="citation-item" style="background-color: #f8f9fa; border-left: 3px solid #0066cc; padding: 10px 15px; margin-bottom: 8px; font-size: 14px;">
+                  <strong>[{{number}}]</strong> 
+                  <a href="{{url}}" style="color: #0066cc; text-decoration: none;">{{title}}</a>
+                </div>
+                {{/each}}
+              </div>
+            </td>
+          </tr>
+          {{/if}}
+          
+          <!-- Footer -->
+          <tr>
+            <td class="footer" style="background-color: #f8f9fa; padding: 30px 40px; border-top: 1px solid #e0e0e0;">
+              <p style="font-size: 13px; color: #666666; margin: 0 0 8px 0; text-align: center; line-height: 1.5;">
+                {{companyName}}, {{companyAddress}}
+              </p>
+              <p style="font-size: 11px; color: #999999; margin: 16px 0 0 0; text-align: center; line-height: 1.6;">
+                This message, including any hypothetical scenarios, is for informational and illustrative purposes only and does not constitute professional advice. These scenarios are hypothetical and do not guarantee any specific outcome or past performance. Individual results will vary based on effort and external factors. We make no promises or guarantees regarding your success or income.
+              </p>
+              <p style="font-size: 12px; color: #666666; margin: 16px 0 0 0; text-align: center;">
+                <a href="{{unsubscribeLink}}" style="color: #666666; text-decoration: underline;">Unsubscribe</a>
+              </p>
+              <p style="font-size: 11px; color: #999999; margin: 12px 0 0 0; text-align: center; line-height: 1.6;">
+                Individual successes are influenced by personal abilities, market conditions, and other external factors. We assume no responsibility for decisions or actions taken based on this email's content. Always consult qualified professionals before making significant business decisions.
+              </p>
+            </td>
+          </tr>
+          
+        </table>
+        
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

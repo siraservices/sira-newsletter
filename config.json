@@ -1,0 +1,66 @@
+{
+  "ai": {
+    "provider": "ollama",
+    "model": "llama3.2:latest",
+    "temperature": 0.7,
+    "maxTokens": 4000,
+    "ollama": {
+      "url": "http://localhost:11434",
+      "recommendedModels": ["llama3.1:8b", "llama3.1:70b", "mistral:7b", "mixtral:8x7b"]
+    }
+  },
+  "email": {
+    "from": "julioaira4@gmail.com",
+    "fromName": "Julio's Newsletter",
+    "companyName": "Aira Development, LLC",
+    "companyAddress": "1032 Charles Ave Charlotte, NC",
+    "recipients": [],
+    "testMode": true,
+    "testRecipient": "julioaira4@gmail.com"
+  },
+  "search": {
+    "provider": "none",
+    "maxResults": 5,
+    "timeout": 5000
+  },
+  "newsletter": {
+    "defaultTone": "hormozi",
+    "targetWordCount": 250,
+    "sectionsCount": 3
+  },
+  "scheduler": {
+    "enabled": false,
+    "cronPattern": "0 2 * * 1",
+    "timezone": "America/New_York"
+  },
+  "preview": {
+    "port": 3000,
+    "autoOpen": true,
+    "timeout": 1800000
+  },
+  "tones": {
+    "hormozi": {
+      "name": "Alex Hormozi",
+      "description": "Direct, ROI-focused, value-driven with specific numbers and actionable frameworks",
+      "guidelines": "Write like Alex Hormozi: Direct and punchy. Use specific numbers and ROI calculations. Focus on actionable frameworks. Short sentences. No fluff. Lead with value. Use analogies from business. End with clear next steps.",
+      "structure": {
+        "opening": "Words I like: [punchy quote about the topic]",
+        "title": "Dynamic title based on topic with specific numbers/results",
+        "format": "numbered_list",
+        "personalStory": true,
+        "specificNumbers": true,
+        "closing": "Sign off with first name only, add PS with actionable teaser"
+      }
+    },
+    "williamson": {
+      "name": "Chris Williamson",
+      "description": "Thoughtful, insight-driven, explores nuance with research-backed perspectives",
+      "guidelines": "Write like Chris Williamson: Thoughtful and nuanced. Explore ideas from multiple angles. Reference research and expert opinions. Use thoughtful questions to engage readers. Balance optimism with realism. Make complex ideas accessible."
+    },
+    "custom": {
+      "name": "Custom",
+      "description": "Define your own tone and style",
+      "guidelines": "Professional, informative, and engaging. Clear and concise writing. Use examples and data to support points. Focus on practical value."
+    }
+  }
+}
