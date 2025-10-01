@@ -182,7 +182,7 @@
     </div>
     
     <h1>Unsubscribe</h1>
-    <p class="subtitle">Are you sure you want to unsubscribe from our newsletter?</p>
+    <p class="subtitle" id="subtitle">Are you sure you want to unsubscribe from our newsletter?</p>
     
     <div class="buttons">
       <button class="btn-unsubscribe" id="unsubscribeBtn">
@@ -202,6 +202,7 @@
     const unsubscribeBtn = document.getElementById('unsubscribeBtn');
     const keepBtn = document.getElementById('keepBtn');
     const messageEl = document.getElementById('message');
+    const subtitleEl = document.getElementById('subtitle');
 
     // Handle unsubscribe
     unsubscribeBtn.addEventListener('click', async () => {
@@ -232,7 +233,8 @@
         if (data.success) {
           showMessage(data.message, 'success');
           
-          // Hide buttons after successful unsubscribe
+          // Hide subtitle and buttons after successful unsubscribe
+          subtitleEl.style.display = 'none';
           setTimeout(() => {
             document.querySelector('.buttons').style.display = 'none';
           }, 1000);
@@ -264,6 +266,10 @@
     function showMessage(text, type) {
       messageEl.textContent = text;
       messageEl.className = `message ${type}`;
+      // Hide the subtitle when showing a message
+      if (type === 'success' || type === 'error') {
+        subtitleEl.style.display = 'none';
+      }
     }
   </script>
 </body>

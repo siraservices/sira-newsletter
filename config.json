@@ -40,7 +40,7 @@
   },
   "subscription": {
     "port": 3001,
-    "baseUrl": "http://localhost:3001",
+    "baseUrl": "https://sira-newsletter-production.up.railway.app",
     "useDatabase": true
   },
   "tones": {
