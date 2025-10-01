@@ -1,14 +1,22 @@
 import Database from 'better-sqlite3';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { existsSync, mkdirSync } from 'fs';
 import crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const dbPath = join(__dirname, '../../data/subscribers.db');
+const dataDir = join(__dirname, '../../data');
+const dbPath = join(dataDir, 'subscribers.db');
 
 class SubscriberDatabase {
   constructor() {
+    // Ensure data directory exists
+    if (!existsSync(dataDir)) {
+      mkdirSync(dataDir, { recursive: true });
+    }
+    
+    // Create or open database
     this.db = new Database(dbPath);
     this.initializeDatabase();
   }
