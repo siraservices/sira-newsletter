@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node src/subscription/server.js",
+    "home": "node src/home/server.js",
+    "dev:home": "nodemon src/home/server.js",
     "generate": "node src/cli/trigger.js",
     "preview": "node src/preview/server.js",
     "test-send": "node src/email/test-send.js",

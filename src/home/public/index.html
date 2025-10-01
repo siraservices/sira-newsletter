@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#0f0f0f">
+    <meta name="description" content="Learn how to implement AI in your business. One strategy a day, delivered to your inbox. Save time, cut costs, and scale faster.">
+    <title>AI Business Newsletter - Transform Your Business with AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #2a2a2a 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            /* Smooth scrolling */
+            scroll-behavior: smooth;
+            /* Prevent overscroll bounce on iOS */
+            overscroll-behavior-y: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Floating background words */
+        .floating-words {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-word {
+            position: absolute;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.03);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .floating-word:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-word:nth-child(2) { top: 20%; left: 80%; animation-delay: 2s; }
+        .floating-word:nth-child(3) { top: 40%; left: 15%; animation-delay: 4s; }
+        .floating-word:nth-child(4) { top: 60%; left: 70%; animation-delay: 1s; }
+        .floating-word:nth-child(5) { top: 80%; left: 30%; animation-delay: 3s; }
+        .floating-word:nth-child(6) { top: 30%; left: 50%; animation-delay: 5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(-40px) translateX(-10px); }
+            75% { transform: translateY(-20px) translateX(10px); }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tagline {
+            font-size: 1.75rem;
+            color: #f0f0f0;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .rotating-text {
+            display: inline-block;
+            color: #fff;
+            font-weight: 700;
+            min-width: 300px;
+            text-align: left;
+        }
+
+        .description {
+            margin: 2rem auto;
+            max-width: 700px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .description p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #fff, transparent);
+            animation: slideRight 2s ease-out;
+        }
+
+        @keyframes slideRight {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .disclaimer {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            margin: 1.5rem auto;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .subscriber-count {
+            display: inline-block;
+            font-size: 1.2rem;
+            color: #1a1a1a;
+            background: #f5f5f5;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin: 1rem 0;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .subscriber-count .number {
+            font-size: 1.5rem;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .signup-section {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem auto;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out 0.5s both;
+            transition: transform 0.3s ease;
+        }
+
+        .signup-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .signup-section h2 {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .signup-section p {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+        }
+
+        .signup-section a {
+            color: #e0e0e0;
+            text-decoration: underline;
+            transition: color 0.3s;
+        }
+
+        .signup-section a:hover {
+            color: #fff;
+        }
+
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        input[type="email"] {
+            padding: 1rem;
+            font-size: 1rem;
+            background: #0f0f0f;
+            color: #fff;
+            border: 2px solid #333;
+            border-radius: 10px;
+            transition: border-color 0.3s, background-color 0.3s, transform 0.2s;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #666;
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        input[type="email"]::placeholder {
+            color: #666;
+        }
+
+        button[type="submit"] {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            color: #000;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button[type="submit"]::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button[type="submit"]:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+        }
+
+        button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.success {
+            background: #2a2a2a;
+            color: #f5f5f5;
+            border: 1px solid #4a4a4a;
+        }
+
+        .message.error {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            border: 1px solid #333;
+        }
+
+        /* Benefits grid with animations */
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem auto;
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefit-item {
+            background: rgba(26, 26, 26, 0.5);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out both;
+        }
+
+        .benefit-item:nth-child(1) { animation-delay: 0.6s; }
+        .benefit-item:nth-child(2) { animation-delay: 0.7s; }
+        .benefit-item:nth-child(3) { animation-delay: 0.8s; }
+
+        .benefit-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: #666;
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .benefit-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .benefit-item:hover .benefit-emoji {
+            animation: none;
+            transform: scale(1.2);
+        }
+
+        .benefit-item h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .benefit-item p {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+
+            .tagline {
+                font-size: 1.15rem;
+                line-height: 1.4;
+            }
+
+            .rotating-text {
+                min-width: 180px;
+                font-size: 1.15rem;
+            }
+
+            .description {
+                max-width: 100%;
+            }
+
+            .description p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+
+            .subscriber-count {
+                font-size: 1rem;
+                padding: 0.4rem 1.2rem;
+            }
+
+            .subscriber-count .number {
+                font-size: 1.3rem;
+            }
+
+            .signup-section {
+                padding: 2rem 1.5rem;
+                margin: 2rem auto;
+            }
+
+            .signup-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .signup-section p {
+                font-size: 0.95rem;
+            }
+
+            input[type="email"] {
+                padding: 0.9rem;
+                font-size: 1rem;
+                /* Prevent zoom on iOS */
+                font-size: 16px;
+            }
+
+            button[type="submit"] {
+                padding: 1rem;
+                font-size: 1rem;
+                /* Make button more touch-friendly */
+                min-height: 48px;
+            }
+
+            .benefits {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin: 2rem auto;
+            }
+
+            .benefit-item {
+                padding: 1.25rem;
+            }
+
+            .benefit-emoji {
+                font-size: 2rem;
+            }
+
+            .benefit-item h3 {
+                font-size: 1rem;
+            }
+
+            .benefit-item p {
+                font-size: 0.85rem;
+            }
+
+            /* Reduce floating word visibility on mobile for better readability */
+            .floating-word {
+                font-size: 1rem;
+                opacity: 0.5;
+            }
+
+            /* Optimize animations for mobile performance */
+            .floating-word {
+                animation-duration: 15s;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .rotating-text {
+                min-width: 150px;
+                font-size: 1rem;
+                display: block;
+                margin-top: 0.5rem;
+            }
+
+            .description p {
+                font-size: 0.95rem;
+            }
+
+            .signup-section {
+                padding: 1.5rem 1rem;
+            }
+
+            .signup-section h2 {
+                font-size: 1.3rem;
+            }
+
+            .benefit-item {
+                padding: 1rem;
+            }
+        }
+
+        /* Landscape mobile optimization */
+        @media (max-width: 896px) and (orientation: landscape) {
+            body {
+                padding: 1rem;
+            }
+
+            header {
+                margin-bottom: 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .description {
+                margin: 1rem auto;
+            }
+
+            .benefits {
+                margin: 1.5rem auto;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            /* Larger touch targets */
+            button[type="submit"] {
+                min-height: 48px;
+                font-size: 16px;
+            }
+
+            input[type="email"] {
+                min-height: 48px;
+                font-size: 16px;
+            }
+
+            /* Disable hover animations on touch devices */
+            .benefit-item:hover {
+                transform: none;
+            }
+
+            /* Replace hover with tap effect */
+            .benefit-item:active {
+                transform: scale(0.98);
+                opacity: 0.9;
+            }
+
+            button[type="submit"]:active {
+                transform: scale(0.98);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-words">
+        <div class="floating-word">Automation</div>
+        <div class="floating-word">Efficiency</div>
+        <div class="floating-word">Scale</div>
+        <div class="floating-word">Innovation</div>
+        <div class="floating-word">Growth</div>
+        <div class="floating-word">Transform</div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>AI for Business Owners</h1>
+            <p class="tagline">Learn How to <span class="rotating-text" id="rotating-text">Automate Operations</span></p>
+            
+            <div class="description">
+                <p><span class="highlight">One AI strategy a day</span>, delivered to your inbox.</p>
+                <p>Real-world implementation guides. No fluff, just actionable steps to integrate AI into your business.</p>
+            </div>
+
+            <p class="disclaimer">Powered by AI • Written for Business Leaders</p>
+
+            <div class="subscriber-count">
+                <span class="number" id="subscriber-count">...</span> business owners learning
+            </div>
+        </header>
+
+        <div class="benefits">
+            <div class="benefit-item">
+                <span class="benefit-emoji">⚡</span>
+                <h3>Save Time</h3>
+                <p>Automate repetitive tasks and focus on growth</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-emoji">💰</span>
+                <h3>Cut Costs</h3>
+                <p>Reduce operational expenses with smart automation</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-emoji">📈</span>
+                <h3>Scale Faster</h3>
+                <p>Grow your business without proportional cost increases</p>
+            </div>
+        </div>
+
+        <section class="signup-section">
+            <h2>Join the Waitlist</h2>
+            <p>Start implementing AI in your business. Free newsletter launching soon.</p>
+            
+            <form class="signup-form" id="signup-form">
+                <div class="form-group">
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="Enter your business email" 
+                        required
+                    >
+                </div>
+                <button type="submit">Get AI Strategies</button>
+            </form>
+
+            <div id="message"></div>
+        </section>
+    </div>
+
+    <script>
+        // Detect mobile devices
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        // Optimize animations for mobile
+        if (isMobile) {
+            // Reduce floating word animations for better performance
+            const floatingWords = document.querySelectorAll('.floating-word');
+            floatingWords.forEach((word, index) => {
+                if (index > 3) {
+                    word.style.display = 'none';
+                }
+            });
+        }
+
+        // Rotating text animation
+        const rotatingTexts = [
+            'Automate Operations',
+            'Cut Costs by 40%',
+            'Scale Your Business',
+            'Boost Productivity',
+            'Implement AI Tools',
+            'Transform Customer Service',
+            'Streamline Workflows'
+        ];
+        let currentIndex = 0;
+        const rotatingElement = document.getElementById('rotating-text');
+
+        function rotateText() {
+            rotatingElement.style.opacity = '0';
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % rotatingTexts.length;
+                rotatingElement.textContent = rotatingTexts[currentIndex];
+                rotatingElement.style.opacity = '1';
+            }, 300);
+        }
+
+        // Add transition to rotating text
+        rotatingElement.style.transition = 'opacity 0.3s ease-in-out';
+
+        // Rotate text every 3 seconds (4 seconds on mobile for better readability)
+        setInterval(rotateText, isMobile ? 4000 : 3000);
+
+        // Fetch subscriber count
+        async function loadSubscriberCount() {
+            try {
+                const response = await fetch('/api/subscribers/count');
+                const data = await response.json();
+                document.getElementById('subscriber-count').textContent = data.count;
+            } catch (error) {
+                document.getElementById('subscriber-count').textContent = '800+';
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const email = document.getElementById('email').value;
+            const messageDiv = document.getElementById('message');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Joining...';
+            messageDiv.innerHTML = '';
+            
+            try {
+                const response = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = '🎉 Welcome! Check your email for confirmation.';
+                    form.reset();
+                    // Reload count
+                    loadSubscriberCount();
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = data.message || 'Something went wrong. Please try again.';
+                }
+            } catch (error) {
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'Network error. Please try again.';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Get AI Strategies';
+            }
+        });
+
+        // Load subscriber count on page load
+        loadSubscriberCount();
+    </script>
+</body>
+</html>
