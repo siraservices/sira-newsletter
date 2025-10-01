@@ -55,11 +55,18 @@ async function testSend() {
     // Prepare newsletter data with unsubscribe link
     const newsletterData = prepareNewsletterData(testNewsletterDraft, testRecipient);
     
-    const results = await sendNewsletter(newsletterData);
+    // Pass the draft to enable personalized unsubscribe links
+    const results = await sendNewsletter(newsletterData, testNewsletterDraft);
 
     if (results[0].success) {
       console.log(chalk.green('✅ Test email sent successfully!\n'));
       console.log(chalk.blue('Check your inbox:', testRecipient, '\n'));
+      
+      const useDatabase = config.get('subscription.useDatabase');
+      if (useDatabase) {
+        const baseUrl = process.env.SUBSCRIPTION_BASE_URL || config.get('subscription.baseUrl') || 'http://localhost:3001';
+        console.log(chalk.dim(`\nUnsubscribe URL type: Web-based (${baseUrl})\n`));
+      }
     } else {
       console.log(chalk.red('❌ Failed to send test email\n'));
       console.log(chalk.red('Error:', results[0].error, '\n'));

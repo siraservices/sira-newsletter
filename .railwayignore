@@ -1,0 +1,11 @@
+node_modules/
+.git/
+drafts/
+logs/
+reference/
+docs/
+*.log
+.env
+token.json
+credentials.json
+

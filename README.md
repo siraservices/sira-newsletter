@@ -14,6 +14,15 @@ An AI-powered newsletter generation system that runs locally and sends professio
 - **100% Local**: All drafts and logs stored locally, no external database needed
 - **Free Option**: Use Ollama for **$0 cost** (completely free!) or Claude for faster/higher quality
 
+## 📚 Documentation
+
+**Comprehensive documentation is available in the [`docs/`](docs/) folder:**
+- **New to this project?** Start with [`docs/setup/START_HERE.md`](docs/setup/START_HERE.md)
+- **Need setup help?** See [`docs/setup/GETTING_STARTED.md`](docs/setup/GETTING_STARTED.md)
+- **Quick reference?** Check [`docs/guides/QUICK_REFERENCE.md`](docs/guides/QUICK_REFERENCE.md)
+- **Architecture details?** Read [`docs/architecture/ARCHITECTURE.md`](docs/architecture/ARCHITECTURE.md)
+- **Full documentation index:** [`docs/README.md`](docs/README.md)
+
 ## 🚀 Quick Start
 
 ### Prerequisites

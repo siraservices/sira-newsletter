@@ -38,6 +38,11 @@
     "autoOpen": true,
     "timeout": 1800000
   },
+  "subscription": {
+    "port": 3001,
+    "baseUrl": "http://localhost:3001",
+    "useDatabase": true
+  },
   "tones": {
     "hormozi": {
       "name": "Alex Hormozi",

@@ -5,6 +5,7 @@
   "main": "src/cli/trigger.js",
   "type": "module",
   "scripts": {
+    "start": "node src/subscription/server.js",
     "generate": "node src/cli/trigger.js",
     "preview": "node src/preview/server.js",
     "test-send": "node src/email/test-send.js",
@@ -12,7 +13,10 @@
     "schedule": "node src/scheduler/cron.js",
     "test": "node src/test/integration.js",
     "test-ollama": "node src/test/test-ollama.js",
-    "setup": "node scripts/install.js"
+    "setup": "node scripts/install.js",
+    "subscription-server": "node src/subscription/server.js",
+    "manage-subscribers": "node src/subscription/manage.js",
+    "import-csv": "node src/subscription/import-csv.js"
   },
   "keywords": [
     "newsletter",
@@ -31,9 +35,11 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.0",
     "axios": "^1.7.7",
+    "better-sqlite3": "^12.4.1",
     "chalk": "^5.3.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "express-validator": "^7.2.1",
     "googleapis": "^144.0.0",
     "handlebars": "^4.7.8",
     "inquirer": "^11.0.2",

@@ -8,3 +8,7 @@ token.json
 *.log
 .vscode/
 .idea/
+
+# Data folder - but allow database for Railway deployment
+data/
+!data/subscribers.db

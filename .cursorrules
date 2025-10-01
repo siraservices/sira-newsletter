@@ -1,0 +1,71 @@
+# SIRA Newsletter - AI Context & Rules
+
+## Project Overview
+This is an automated AI-powered newsletter system that:
+- Researches topics using AI (Anthropic Claude/Ollama)
+- Generates newsletter content
+- Manages subscribers
+- Sends emails via Gmail
+- Handles unsubscribe functionality
+
+## Tech Stack
+- **Runtime**: Node.js
+- **AI Providers**: Anthropic Claude API, Ollama (local LLM)
+- **Email**: Gmail API
+- **Database**: SQLite (subscribers.db) + JSON
+- **Template Engine**: Handlebars
+- **Scheduling**: node-cron
+
+## Quick Start Documentation
+**Start here**: `docs/setup/START_HERE.md`
+- For first-time setup: `docs/setup/GETTING_STARTED.md`
+- For Ollama setup: `docs/setup/QUICK_START_OLLAMA.md`
+
+## Key Architecture Points
+See `docs/architecture/ARCHITECTURE.md` for full details.
+
+### Core Modules
+- **AI System** (`src/ai/`): planner → researcher → writer → editor
+- **Email** (`src/email/`): sender, templates, Gmail integration
+- **Subscription** (`src/subscription/`): management, unsubscribe server
+- **Database** (`src/database/`): subscriber management
+- **Scheduler** (`src/scheduler/`): automated newsletter generation
+
+### Configuration
+- `config.json` - Main config (AI provider, topics, schedule)
+- `token.json` - Gmail OAuth token (auto-generated)
+- Email templates: `src/email/templates/newsletter-hormozi.hbs` & `newsletter.hbs`
+
+## Important Patterns
+1. **AI Provider Flexibility**: System supports both Anthropic and Ollama
+2. **Draft System**: Newsletters saved to `drafts/` before sending
+3. **Subscriber Management**: CSV import, web unsubscribe, database sync
+4. **Preview Server**: Test newsletters before sending (`npm run preview`)
+
+## Common Tasks
+- Generate newsletter: `npm run generate`
+- Send test email: `npm run test-send`
+- Start automation: `npm start`
+- Preview newsletter: `npm run preview`
+- Manage subscribers: `npm run manage-subscribers`
+
+## Development Guidelines
+- Use the logger (`src/utils/logger.js`) for all logging
+- Always respect subscriber opt-out status
+- Test with preview before sending to real subscribers
+- Keep AI prompts modular and configurable
+
+## Documentation Structure
+```
+docs/
+├── setup/          - Installation and configuration guides
+├── guides/         - How-to guides and references
+├── architecture/   - System design and technical details
+└── changelog/      - Version history and updates
+```
+
+## Reference Files
+- Master index: `docs/README.md`
+- Quick reference: `docs/guides/QUICK_REFERENCE.md`
+- Project summary: `docs/architecture/PROJECT_SUMMARY.md`
+

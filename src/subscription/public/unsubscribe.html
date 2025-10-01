@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unsubscribe - Newsletter</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 48px 40px;
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon svg {
+      width: 40px;
+      height: 40px;
+      stroke: white;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    button {
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .btn-unsubscribe {
+      background-color: #dc2626;
+      color: white;
+    }
+
+    .btn-unsubscribe:hover {
+      background-color: #b91c1c;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    }
+
+    .btn-unsubscribe:active {
+      transform: translateY(0);
+    }
+
+    .btn-keep {
+      background-color: white;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+
+    .btn-keep:hover {
+      background-color: #f9fafb;
+      border-color: #9ca3af;
+    }
+
+    .btn-unsubscribe:disabled,
+    .btn-keep:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .message.success {
+      background-color: #d1fae5;
+      color: #065f46;
+      border: 1px solid #6ee7b7;
+      display: block;
+    }
+
+    .message.error {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+      display: block;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 36px 24px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <path d="M3 7l9 6 9-6"/>
+      </svg>
+    </div>
+    
+    <h1>Unsubscribe</h1>
+    <p class="subtitle">Are you sure you want to unsubscribe from our newsletter?</p>
+    
+    <div class="buttons">
+      <button class="btn-unsubscribe" id="unsubscribeBtn">
+        <span class="btn-text">Unsubscribe</span>
+      </button>
+      <button class="btn-keep" id="keepBtn">Keep Subscription</button>
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    // Get token from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    const unsubscribeBtn = document.getElementById('unsubscribeBtn');
+    const keepBtn = document.getElementById('keepBtn');
+    const messageEl = document.getElementById('message');
+
+    // Handle unsubscribe
+    unsubscribeBtn.addEventListener('click', async () => {
+      if (!token) {
+        showMessage('Invalid unsubscribe link', 'error');
+        return;
+      }
+
+      // Disable buttons
+      unsubscribeBtn.disabled = true;
+      keepBtn.disabled = true;
+
+      // Show loading state
+      const btnText = unsubscribeBtn.querySelector('.btn-text');
+      btnText.innerHTML = '<span class="spinner"></span>Processing...';
+
+      try {
+        const response = await fetch('/api/unsubscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showMessage(data.message, 'success');
+          
+          // Hide buttons after successful unsubscribe
+          setTimeout(() => {
+            document.querySelector('.buttons').style.display = 'none';
+          }, 1000);
+        } else {
+          showMessage(data.message || 'Failed to unsubscribe', 'error');
+          // Reset button
+          btnText.textContent = 'Unsubscribe';
+          unsubscribeBtn.disabled = false;
+          keepBtn.disabled = false;
+        }
+      } catch (error) {
+        showMessage('An error occurred. Please try again.', 'error');
+        // Reset button
+        btnText.textContent = 'Unsubscribe';
+        unsubscribeBtn.disabled = false;
+        keepBtn.disabled = false;
+      }
+    });
+
+    // Handle keep subscription
+    keepBtn.addEventListener('click', () => {
+      window.close();
+      // If window doesn't close, show a message
+      setTimeout(() => {
+        showMessage('You will continue to receive our newsletter. You can close this window.', 'success');
+      }, 100);
+    });
+
+    function showMessage(text, type) {
+      messageEl.textContent = text;
+      messageEl.className = `message ${type}`;
+    }
+  </script>
+</body>
+</html>
+
