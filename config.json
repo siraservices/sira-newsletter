@@ -11,7 +11,7 @@
   },
   "email": {
     "from": "julioaira4@gmail.com",
-    "fromName": "Julio's Newsletter",
+    "fromName": "Julio",
     "companyName": "Aira Development, LLC",
     "companyAddress": "1032 Charles Ave Charlotte, NC",
     "recipients": [],
@@ -25,7 +25,9 @@
   },
   "newsletter": {
     "defaultTone": "hormozi",
-    "targetWordCount": 250,
+    "targetWordCount": 425,
+    "minWordCount": 400,
+    "maxWordCount": 450,
     "sectionsCount": 3
   },
   "scheduler": {

@@ -7,6 +7,8 @@ export async function consolidateNewsletter(plan, sections, tone, topic) {
 
   const toneGuidelines = config.get(`tones.${tone}.guidelines`) || config.get('tones.custom.guidelines');
   const toneStructure = config.get(`tones.${tone}.structure`);
+  const minWords = config.get('newsletter.minWordCount') || 400;
+  const maxWords = config.get('newsletter.maxWordCount') || 450;
   
   const sectionsContent = sections.map(s => s.content).join('\n\n');
   
@@ -14,7 +16,7 @@ export async function consolidateNewsletter(plan, sections, tone, topic) {
   
   if (tone === 'hormozi' && toneStructure) {
     // Hormozi-specific format
-    prompt = `You are Alex Hormozi writing a SHORT email. Format EXACTLY like this:
+    prompt = `🚨 YOU ARE ALEX HORMOZI - WRITE NEWSLETTER WITH STRICT WORD COUNT 🚨
 
 **Words I like:** [punchy quote about ${topic}]
 
@@ -30,17 +32,22 @@ Julio
 
 PS - [teaser or additional actionable tip]
 
-CRITICAL Requirements:
-- MAXIMUM 250 WORDS TOTAL for the entire email
+🚨 CRITICAL WORD COUNT REQUIREMENTS 🚨
+- TARGET: ${minWords}-${maxWords} WORDS TOTAL for the entire newsletter
+- If you are under ${minWords} words, EXPAND content with more details
+- If you exceed ${maxWords} words, trim content strategically
+- Count every word - this is mandatory
 - Use numbered lists (1. 2. 3. etc.)
 - Include specific numbers and percentages
 - Keep sentences short and punchy
-- Absolutely NO fluff - cut everything unnecessary
+- Be substantial enough to meet word count requirement
 - Direct and actionable
 - Plain text format (no markdown headers, just bold for titles)
 - Make the title specific to the topic with numbers/results
-- Be EXTREMELY concise - every word must earn its place
-- DO NOT include a date at the top - the system will add that automatically`;
+- ⚠️  EXPAND CONTENT if under ${minWords} words - add more examples, frameworks, and actionable insights
+- ⚠️  TRIM CONTENT if over ${maxWords} words - prioritize quality over quantity
+- DO NOT include a date at the top - the system will add that automatically
+- ⚠️  FINAL CHECK: Count words before finishing - must be ${minWords}-${maxWords} words exactly`;
   } else {
     // Default format
     prompt = `You are an expert newsletter editor. Consolidate and polish this newsletter.
@@ -48,6 +55,21 @@ CRITICAL Requirements:
 Topic: ${topic}
 Tone: ${toneGuidelines}
 Hook: ${plan.hook}
+
+CRITICAL WORD COUNT REQUIREMENT: Newsletter must be EXACTLY ${minWords}-${maxWords} words total.
+
+Sections to consolidate:
+${sectionsContent}
+
+Requirements:
+- TARGET: ${minWords}-${maxWords} words total (AIM FOR THIS RANGE)
+- If under ${minWords} words, EXPAND with more details and examples
+- If over ${maxWords} words, trim strategically while maintaining value
+- Maintain the tone and style
+- Be comprehensive and valuable
+- Include actionable insights
+- Add more examples, frameworks, and practical steps if under word count
+- Create a compelling subject line
 CTA: ${plan.cta}
 
 Current Sections:

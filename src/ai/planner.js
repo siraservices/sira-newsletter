@@ -9,19 +9,27 @@ export async function planNewsletter(topic, tone, audience) {
   const sectionsCount = config.get('newsletter.sectionsCount');
   const targetWordCount = config.get('newsletter.targetWordCount');
 
-  const prompt = `You are a newsletter content strategist. Plan a SHORT, CONCISE newsletter.
+  const minWords = config.get('newsletter.minWordCount') || 400;
+  const maxWords = config.get('newsletter.maxWordCount') || 450;
+  
+  const prompt = `You are a newsletter content strategist. Plan a newsletter with STRICT word count requirements.
 
 Topic: ${topic}
 Tone: ${tone} (${toneGuidelines})
 Audience: ${audience}
 
-CRITICAL: Total newsletter must be MAXIMUM ${targetWordCount} words including all sections.
+🚨 CRITICAL WORD COUNT REQUIREMENT 🚨
+Newsletter must be EXACTLY between ${minWords}-${maxWords} words total. NO EXCEPTIONS.
+This is MANDATORY and will be strictly enforced.
 
-Create an outline with ${sectionsCount} BRIEF sections. Each section needs:
+Create an outline with ${sectionsCount} sections. Each section needs:
 1. Section title (compelling and specific)
-2. 2-3 key points ONLY (be concise!)
+2. 3-4 key points with detailed explanations
 3. Specific research queries needed
-4. Target word count (TOTAL across ALL sections must not exceed ${targetWordCount} words)
+4. Target word count (TOTAL across ALL sections must be ${minWords}-${maxWords} words)
+5. Each section should be SUBSTANTIAL and DETAILED
+
+⚠️  WARNING: If total exceeds ${maxWords} words, the newsletter will be rejected.
 
 RESPOND WITH ONLY VALID JSON - NO MARKDOWN, NO CODE BLOCKS, NO EXPLANATIONS.
 
@@ -44,7 +52,11 @@ RULES:
 - Use double quotes for all strings
 - No trailing commas
 - No comments
-- Keep sections SHORT - Maximum ${targetWordCount} words total`;
+- 🚨 MANDATORY: Total word count must be ${minWords}-${maxWords} words EXACTLY
+- Distribute words across sections appropriately
+- Each section should be substantial enough to meet the word count requirement
+- ⚠️  REMEMBER: If you exceed ${maxWords} words, the newsletter will be rejected
+- Plan conservatively - better to be under than over`;
 
   try {
     const result = await callAI(prompt, {
@@ -133,12 +145,13 @@ RULES:
       throw new Error('Invalid plan structure - missing required fields');
     }
 
-    // Ensure all sections have required fields
+    // Ensure all sections have required fields with higher word allocation
+    const wordsPerSection = Math.floor(maxWords / sectionsCount);
     plan.sections = plan.sections.map((section, idx) => ({
       title: section.title || `Section ${idx + 1}`,
       keyPoints: Array.isArray(section.keyPoints) ? section.keyPoints : [],
       researchQueries: Array.isArray(section.researchQueries) ? section.researchQueries : [],
-      targetWords: section.targetWords || Math.floor(targetWordCount / sectionsCount)
+      targetWords: section.targetWords || wordsPerSection
     }));
 
     logger.info('Newsletter plan created', { 

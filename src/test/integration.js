@@ -33,16 +33,23 @@ tests.push({
     if (!aiProvider) throw new Error('AI_PROVIDER not set');
     if (!searchProvider) throw new Error('SEARCH_PROVIDER not set');
     
-    const aiKey = aiProvider === 'anthropic' 
-      ? config.getEnv('ANTHROPIC_API_KEY')
-      : config.getEnv('OPENAI_API_KEY');
+    // Check AI key only if not using Ollama (Ollama runs locally, no key needed)
+    if (aiProvider !== 'ollama') {
+      const aiKey = aiProvider === 'anthropic' 
+        ? config.getEnv('ANTHROPIC_API_KEY')
+        : config.getEnv('OPENAI_API_KEY');
+      
+      if (!aiKey) throw new Error(`${aiProvider.toUpperCase()}_API_KEY not set`);
+    }
     
-    const searchKey = searchProvider === 'brave'
-      ? config.getEnv('BRAVE_API_KEY')
-      : config.getEnv('SERPER_API_KEY');
-    
-    if (!aiKey) throw new Error(`${aiProvider.toUpperCase()}_API_KEY not set`);
-    if (!searchKey) throw new Error(`${searchProvider.toUpperCase()}_API_KEY not set`);
+    // Check search key only if using a search provider (not 'none')
+    if (searchProvider !== 'none') {
+      const searchKey = searchProvider === 'brave'
+        ? config.getEnv('BRAVE_API_KEY')
+        : config.getEnv('SERPER_API_KEY');
+      
+      if (!searchKey) throw new Error(`${searchProvider.toUpperCase()}_API_KEY not set`);
+    }
     
     return `AI: ${aiProvider}, Search: ${searchProvider}`;
   }

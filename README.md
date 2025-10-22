@@ -16,9 +16,17 @@ An AI-powered newsletter generation system that runs locally and sends professio
 
 ## 📚 Documentation
 
-**Comprehensive documentation is available in the [`docs/`](docs/) folder:**
+**🎉 NEW: System is configured and ready to use!**
+
+### Quick Start
+- **⚡ Ready to use?** See [`QUICK_START.md`](QUICK_START.md) - Get running in 5 minutes
+- **📊 MVP Status?** Check [`MVP_STATUS.md`](MVP_STATUS.md) - Complete system overview
+- **🚀 Ready to deploy?** Read [`MVP_GUIDE.md`](MVP_GUIDE.md) - Full feature guide
+
+### Detailed Documentation
 - **New to this project?** Start with [`docs/setup/START_HERE.md`](docs/setup/START_HERE.md)
 - **Need setup help?** See [`docs/setup/GETTING_STARTED.md`](docs/setup/GETTING_STARTED.md)
+- **Deploying to production?** Read [`docs/setup/PRODUCTION_DEPLOYMENT.md`](docs/setup/PRODUCTION_DEPLOYMENT.md)
 - **Quick reference?** Check [`docs/guides/QUICK_REFERENCE.md`](docs/guides/QUICK_REFERENCE.md)
 - **Architecture details?** Read [`docs/architecture/ARCHITECTURE.md`](docs/architecture/ARCHITECTURE.md)
 - **Full documentation index:** [`docs/README.md`](docs/README.md)

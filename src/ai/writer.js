@@ -11,7 +11,12 @@ export async function writeSection(section, researchData, tone, sectionIndex) {
     ? formatResearchForPrompt(researchData)
     : 'No web search results available. Use your comprehensive knowledge base to provide accurate, up-to-date information on this topic. Include specific examples, statistics, and actionable insights based on widely known best practices and research.';
 
-  const prompt = `Write a SHORT newsletter section with these specifications:
+  const minWords = config.get('newsletter.minWordCount') || 400;
+  const maxWords = config.get('newsletter.maxWordCount') || 450;
+  const sectionsCount = config.get('newsletter.sectionsCount');
+  const targetWordsPerSection = Math.floor(maxWords / sectionsCount);
+  
+  const prompt = `🚨 WRITE NEWSLETTER SECTION WITH STRICT WORD COUNT ENFORCEMENT 🚨
 
 Section Plan:
 ${JSON.stringify(section, null, 2)}
@@ -22,16 +27,24 @@ ${researchContext}
 Tone Guidelines:
 ${toneGuidelines}
 
-CRITICAL Requirements:
-- MAXIMUM ${section.targetWords} words for this section
-- Be EXTREMELY concise and direct
+🚨 CRITICAL WORD COUNT REQUIREMENTS 🚨
+- TARGET: ${targetWordsPerSection} words for this section (AIM FOR THIS EXACTLY)
+- Total newsletter must be ${minWords}-${maxWords} words
+- If you are significantly under ${targetWordsPerSection} words, expand the content
+- Be comprehensive and detailed within the word limit
+
+Requirements:
 - Use specific examples and data from research when available
 - Match the tone precisely
-- NO fluff, get straight to the point
-- Short, punchy sentences
-- One key takeaway
+- Include actionable insights and frameworks
+- Provide concrete examples and case studies
+- Use numbered lists or bullet points for clarity
+- End with specific next steps
+- ⚠️  BE SUBSTANTIAL - aim for ${targetWordsPerSection} words with valuable content
+- Include multiple paragraphs, detailed explanations, and practical examples
+- Don't be too brief - expand on each point with depth
 
-Output in markdown format. Keep it BRIEF and impactful.`;
+Output in markdown format. Be VALUABLE and COMPREHENSIVE.`;
 
   try {
     const content = await callAI(prompt, {
