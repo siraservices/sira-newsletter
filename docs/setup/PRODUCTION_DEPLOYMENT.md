@@ -126,22 +126,23 @@ railway up
 
 7. **Configure Services**
 
-Railway needs to run 2 services:
-- **Home Server** (landing page + signup): `npm run home`
-- **Unsubscribe Server**: `npm start`
+Railway needs to run 2 services (create separate services in Railway):
 
-Create a `railway.json` or use Railway dashboard to configure:
-```json
-{
-  "build": {
-    "builder": "NIXPACKS"
-  },
-  "deploy": {
-    "startCommand": "npm run home",
-    "restartPolicyType": "ON_FAILURE"
-  }
-}
-```
+**Service 1: Home Server** (Newsletter signup page with posts)
+- Start Command: `node src/home/server.js`
+- Config file: `railway-home.json` (already created)
+- Port: Auto-assigned by Railway via `PORT` env var
+
+**Service 2: Subscription Server** (Unsubscribe functionality)
+- Start Command: `node src/subscription/server.js`
+- Config file: `railway.json` (already exists)
+- Port: Auto-assigned by Railway via `PORT` env var
+
+**To set up in Railway:**
+1. Create first service → Set start command to `node src/home/server.js`
+2. Create second service → Set start command to `node src/subscription/server.js`
+3. Each service gets its own Railway URL
+4. Update `SUBSCRIPTION_BASE_URL` env var with Subscription Server URL
 
 8. **Set Up Domain** (Optional)
 - Go to Railway dashboard → Settings

@@ -74,8 +74,16 @@ async function sendDraft() {
     const results = await sendNewsletter(newsletterData, draft);
     
     if (results[0].success) {
+      // Update draft status to "sent"
+      draft.metadata.status = 'sent';
+      draft.metadata.sentAt = new Date().toISOString();
+      draft.metadata.sentResults = results;
+      const fs2 = await import('fs');
+      fs2.writeFileSync(draftPath, JSON.stringify(draft, null, 2));
+      
       console.log(chalk.green('✅ Newsletter sent successfully!\n'));
       console.log(chalk.blue(`Check inbox: ${recipient}\n`));
+      console.log(chalk.dim('📝 Draft status updated to "sent" - will appear on home page\n'));
     } else {
       console.log(chalk.red('❌ Failed to send newsletter\n'));
       console.log(chalk.red('Error:', results[0].error, '\n'));

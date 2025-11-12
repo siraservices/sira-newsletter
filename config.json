@@ -28,7 +28,11 @@
     "targetWordCount": 425,
     "minWordCount": 400,
     "maxWordCount": 450,
-    "sectionsCount": 3
+    "sectionsCount": 3,
+    "name": "AI Business Newsletter",
+    "description": "Learn how to implement AI in your business. One strategy a day, delivered to your inbox. Save time, cut costs, and scale faster.",
+    "authorImage": "/profile.jpg",
+    "readingSpeed": 200
   },
   "scheduler": {
     "enabled": false,

@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#0f0f0f">
-    <meta name="description" content="Learn how to implement AI in your business. One strategy a day, delivered to your inbox. Save time, cut costs, and scale faster.">
-    <title>AI Business Newsletter - Transform Your Business with AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts | AI Business Newsletter</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -17,717 +15,826 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #0f0f0f 0%, #2a2a2a 100%);
-            min-height: 100vh;
-            padding: 2rem;
-            color: #e0e0e0;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            /* Smooth scrolling */
-            scroll-behavior: smooth;
-            /* Prevent overscroll bounce on iOS */
-            overscroll-behavior-y: none;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            position: relative;
+            padding: 2rem 1rem;
         }
 
-        /* Floating background words */
-        .floating-words {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .floating-word {
-            position: absolute;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.03);
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .floating-word:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
-        .floating-word:nth-child(2) { top: 20%; left: 80%; animation-delay: 2s; }
-        .floating-word:nth-child(3) { top: 40%; left: 15%; animation-delay: 4s; }
-        .floating-word:nth-child(4) { top: 60%; left: 70%; animation-delay: 1s; }
-        .floating-word:nth-child(5) { top: 80%; left: 30%; animation-delay: 3s; }
-        .floating-word:nth-child(6) { top: 30%; left: 50%; animation-delay: 5s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            25% { transform: translateY(-20px) translateX(10px); }
-            50% { transform: translateY(-40px) translateX(-10px); }
-            75% { transform: translateY(-20px) translateX(10px); }
-        }
-
-        header {
-            text-align: center;
+        /* Header Section */
+        .header-section {
+            background-color: #f5f5f5;
+            border-radius: 12px;
+            padding: 2rem;
             margin-bottom: 3rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
             position: relative;
             z-index: 1;
         }
 
-        h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            animation: fadeInDown 1s ease-out;
+        .profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background-color: #e0e0e0;
+            display: block;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .header-content {
+            flex: 1;
+            min-width: 0;
         }
 
-        .tagline {
-            font-size: 1.75rem;
-            color: #f0f0f0;
-            font-weight: 500;
-            margin-bottom: 2rem;
-            animation: fadeIn 1.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .rotating-text {
-            display: inline-block;
-            color: #fff;
-            font-weight: 700;
-            min-width: 300px;
-            text-align: left;
-        }
-
-        .description {
-            margin: 2rem auto;
-            max-width: 700px;
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .description p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #e0e0e0;
-            margin-bottom: 1rem;
-        }
-
-        .highlight {
-            color: #fff;
-            font-weight: 600;
-            position: relative;
-            display: inline-block;
-        }
-
-        .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, #fff, transparent);
-            animation: slideRight 2s ease-out;
-        }
-
-        @keyframes slideRight {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        .disclaimer {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-            font-style: italic;
-            margin: 1.5rem auto;
-            animation: fadeIn 2s ease-out;
-        }
-
-        .subscriber-count {
-            display: inline-block;
-            font-size: 1.2rem;
-            color: #1a1a1a;
-            background: #f5f5f5;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            margin: 1rem 0;
-            font-weight: 600;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .subscriber-count .number {
-            font-size: 1.5rem;
-            color: #000;
-            font-weight: 700;
-        }
-
-        .signup-section {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 3rem auto;
-            max-width: 600px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            position: relative;
-            z-index: 1;
-            animation: fadeInUp 1s ease-out 0.5s both;
-            transition: transform 0.3s ease;
-        }
-
-        .signup-section:hover {
-            transform: translateY(-5px);
-        }
-
-        .signup-section h2 {
+        .newsletter-title {
             font-size: 2rem;
-            color: #fff;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+            color: #1a1a1a;
+            line-height: 1.2;
+        }
+
+        .author-name {
+            font-size: 1rem;
+            color: #666;
             margin-bottom: 1rem;
-            text-align: center;
+            margin-top: 0;
         }
 
-        .signup-section p {
-            text-align: center;
-            color: #b0b0b0;
-            margin-bottom: 2rem;
-        }
-
-        .signup-section a {
-            color: #e0e0e0;
-            text-decoration: underline;
-            transition: color 0.3s;
-        }
-
-        .signup-section a:hover {
-            color: #fff;
+        .newsletter-description {
+            font-size: 0.95rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            margin-top: 0;
         }
 
         .signup-form {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
             gap: 0.5rem;
+            max-width: 500px;
         }
 
-        input[type="email"] {
-            padding: 1rem;
-            font-size: 1rem;
-            background: #0f0f0f;
-            color: #fff;
-            border: 2px solid #333;
-            border-radius: 10px;
-            transition: border-color 0.3s, background-color 0.3s, transform 0.2s;
+        .email-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
         }
 
-        input[type="email"]:focus {
+        .email-input:focus {
             outline: none;
-            border-color: #666;
-            background: #1a1a1a;
-            transform: translateY(-2px);
+            border-color: #0066cc;
         }
 
-        input[type="email"]::placeholder {
-            color: #666;
-        }
-
-        button[type="submit"] {
-            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
-            color: #000;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
+        .subscribe-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: #0066cc;
+            color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-            overflow: hidden;
+            transition: background-color 0.2s;
         }
 
-        button[type="submit"]::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+        .subscribe-btn:hover {
+            background-color: #0052a3;
         }
 
-        button[type="submit"]:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        button[type="submit"]:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
-            background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
-        }
-
-        button[type="submit"]:disabled {
+        .subscribe-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
 
         .message {
-            padding: 1rem;
-            border-radius: 10px;
             margin-top: 1rem;
-            text-align: center;
-            font-weight: 500;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
         }
 
         .message.success {
-            background: #2a2a2a;
-            color: #f5f5f5;
-            border: 1px solid #4a4a4a;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
 
         .message.error {
-            background: #1a1a1a;
-            color: #e0e0e0;
-            border: 1px solid #333;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
 
-        /* Benefits grid with animations */
-        .benefits {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem auto;
-            max-width: 900px;
+        /* Posts Section */
+        .posts-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            margin-top: 0;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #0066cc;
             position: relative;
             z-index: 1;
         }
 
-        .benefit-item {
-            background: rgba(26, 26, 26, 0.5);
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            animation: fadeInUp 1s ease-out both;
+        .posts-icon {
+            width: 24px;
+            height: 24px;
+            opacity: 0.7;
         }
 
-        .benefit-item:nth-child(1) { animation-delay: 0.6s; }
-        .benefit-item:nth-child(2) { animation-delay: 0.7s; }
-        .benefit-item:nth-child(3) { animation-delay: 0.8s; }
-
-        .benefit-item:hover {
-            transform: translateY(-10px) scale(1.05);
-            border-color: #666;
-            background: rgba(26, 26, 26, 0.8);
-        }
-
-        .benefit-emoji {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .benefit-item:hover .benefit-emoji {
-            animation: none;
-            transform: scale(1.2);
-        }
-
-        .benefit-item h3 {
-            font-size: 1.1rem;
-            color: #fff;
-            margin-bottom: 0.5rem;
+        .posts-title {
+            font-size: 1.5rem;
             font-weight: 600;
+            color: #1a1a1a;
         }
 
-        .benefit-item p {
+        /* Featured Post */
+        .featured-post {
+            background-color: #f5f5f5;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            background-color: #0066cc;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .featured-content {
+            flex: 1;
+            position: relative;
+        }
+
+        .featured-image {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            background-color: #e0e0e0;
+            flex-shrink: 0;
+        }
+
+        .featured-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 0;
+            color: #1a1a1a;
+            padding-top: 0;
+        }
+
+        .featured-preview {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .featured-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .read-now-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .read-now-btn:hover {
+            background-color: #0052a3;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 0.9rem;
-            color: #b0b0b0;
-            line-height: 1.5;
+            color: #666;
         }
 
+        /* Post List */
+        .post-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .post-item {
+            background-color: #f5f5f5;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .post-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .post-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            background-color: #e0e0e0;
+            flex-shrink: 0;
+            display: block;
+        }
+
+        .post-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .post-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            margin-top: 0;
+            color: #1a1a1a;
+            line-height: 1.3;
+        }
+
+        .post-preview {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 0.75rem;
+            margin-top: 0;
+            line-height: 1.6;
+        }
+
+        /* View More Button */
+        .view-more-section {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .view-more-btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .view-more-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Social Sharing Footer */
+        .social-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 3rem;
+        }
+
+        .share-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .share-text {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .social-icon:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Modal for Post Detail */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            padding: 2rem;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        .modal-close:hover {
+            background-color: #f5f5f5;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .modal-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .modal-body {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .modal-body h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem 0;
+            color: #1a1a1a;
+        }
+
+        .modal-body h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem 0;
+            color: #1a1a1a;
+        }
+
+        .modal-body p {
+            margin-bottom: 1rem;
+        }
+
+        .modal-body ul,
+        .modal-body ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        .modal-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body strong {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .modal-body a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .modal-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            body {
+            .container {
                 padding: 1rem;
             }
 
-            h1 {
-                font-size: 2.5rem;
-                line-height: 1.2;
+            .header-section {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
 
-            .tagline {
-                font-size: 1.15rem;
-                line-height: 1.4;
+            .profile-image {
+                width: 100px;
+                height: 100px;
             }
 
-            .rotating-text {
-                min-width: 180px;
-                font-size: 1.15rem;
-            }
-
-            .description {
-                max-width: 100%;
-            }
-
-            .description p {
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-
-            .subscriber-count {
-                font-size: 1rem;
-                padding: 0.4rem 1.2rem;
-            }
-
-            .subscriber-count .number {
-                font-size: 1.3rem;
-            }
-
-            .signup-section {
-                padding: 2rem 1.5rem;
-                margin: 2rem auto;
-            }
-
-            .signup-section h2 {
+            .newsletter-title {
                 font-size: 1.5rem;
             }
 
-            .signup-section p {
-                font-size: 0.95rem;
+            .signup-form {
+                flex-direction: column;
+                width: 100%;
             }
 
-            input[type="email"] {
-                padding: 0.9rem;
-                font-size: 1rem;
-                /* Prevent zoom on iOS */
-                font-size: 16px;
+            .featured-post {
+                flex-direction: column;
             }
 
-            button[type="submit"] {
-                padding: 1rem;
-                font-size: 1rem;
-                /* Make button more touch-friendly */
-                min-height: 48px;
+            .featured-image {
+                width: 100%;
+                height: 200px;
             }
 
-            .benefits {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                margin: 2rem auto;
+            .featured-title {
+                font-size: 1.5rem;
             }
 
-            .benefit-item {
-                padding: 1.25rem;
+            .post-item {
+                flex-direction: column;
             }
 
-            .benefit-emoji {
-                font-size: 2rem;
+            .post-image {
+                width: 100%;
+                height: 200px;
             }
 
-            .benefit-item h3 {
-                font-size: 1rem;
+            .social-footer {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
             }
 
-            .benefit-item p {
-                font-size: 0.85rem;
-            }
-
-            /* Reduce floating word visibility on mobile for better readability */
-            .floating-word {
-                font-size: 1rem;
-                opacity: 0.5;
-            }
-
-            /* Optimize animations for mobile performance */
-            .floating-word {
-                animation-duration: 15s;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .tagline {
-                font-size: 1rem;
-            }
-
-            .rotating-text {
-                min-width: 150px;
-                font-size: 1rem;
-                display: block;
-                margin-top: 0.5rem;
-            }
-
-            .description p {
-                font-size: 0.95rem;
-            }
-
-            .signup-section {
-                padding: 1.5rem 1rem;
-            }
-
-            .signup-section h2 {
-                font-size: 1.3rem;
-            }
-
-            .benefit-item {
-                padding: 1rem;
-            }
-        }
-
-        /* Landscape mobile optimization */
-        @media (max-width: 896px) and (orientation: landscape) {
-            body {
-                padding: 1rem;
-            }
-
-            header {
-                margin-bottom: 2rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .description {
-                margin: 1rem auto;
-            }
-
-            .benefits {
-                margin: 1.5rem auto;
-            }
-        }
-
-        /* Touch device optimizations */
-        @media (hover: none) and (pointer: coarse) {
-            /* Larger touch targets */
-            button[type="submit"] {
-                min-height: 48px;
-                font-size: 16px;
-            }
-
-            input[type="email"] {
-                min-height: 48px;
-                font-size: 16px;
-            }
-
-            /* Disable hover animations on touch devices */
-            .benefit-item:hover {
-                transform: none;
-            }
-
-            /* Replace hover with tap effect */
-            .benefit-item:active {
-                transform: scale(0.98);
-                opacity: 0.9;
-            }
-
-            button[type="submit"]:active {
-                transform: scale(0.98);
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="floating-words">
-        <div class="floating-word">Automation</div>
-        <div class="floating-word">Efficiency</div>
-        <div class="floating-word">Scale</div>
-        <div class="floating-word">Innovation</div>
-        <div class="floating-word">Growth</div>
-        <div class="floating-word">Transform</div>
-    </div>
-
     <div class="container">
-        <header>
-            <h1>AI for Business Owners</h1>
-            <p class="tagline">Learn How to <span class="rotating-text" id="rotating-text">Automate Operations</span></p>
-            
-            <div class="description">
-                <p><span class="highlight">One AI strategy a day</span>, delivered to your inbox.</p>
-                <p>Real-world implementation guides. No fluff, just actionable steps to integrate AI into your business.</p>
-            </div>
-
-            <p class="disclaimer">Powered by AI • Written for Business Leaders</p>
-
-            <div class="subscriber-count">
-                <span class="number" id="subscriber-count">...</span> business owners learning
-            </div>
-        </header>
-
-        <div class="benefits">
-            <div class="benefit-item">
-                <span class="benefit-emoji">⚡</span>
-                <h3>Save Time</h3>
-                <p>Automate repetitive tasks and focus on growth</p>
-            </div>
-            <div class="benefit-item">
-                <span class="benefit-emoji">💰</span>
-                <h3>Cut Costs</h3>
-                <p>Reduce operational expenses with smart automation</p>
-            </div>
-            <div class="benefit-item">
-                <span class="benefit-emoji">📈</span>
-                <h3>Scale Faster</h3>
-                <p>Grow your business without proportional cost increases</p>
+        <!-- Header Section -->
+        <div class="header-section" id="header-section">
+            <img src="/profile.jpg" alt="Profile" class="profile-image" id="profile-image" onerror="this.style.display='none'">
+            <div class="header-content">
+                <h1 class="newsletter-title" id="newsletter-title">AI Business Newsletter</h1>
+                <p class="author-name" id="author-name">by Julio</p>
+                <p class="newsletter-description" id="newsletter-description">
+                    Learn how to implement AI in your business. One strategy a day, delivered to your inbox. Save time, cut costs, and scale faster.
+                </p>
+                <form class="signup-form" id="signup-form">
+                    <input 
+                        type="email" 
+                        class="email-input" 
+                        id="email-input"
+                        placeholder="Email Address" 
+                        required
+                    >
+                    <button type="submit" class="subscribe-btn" id="subscribe-btn">Subscribe</button>
+                </form>
+                <div id="message"></div>
             </div>
         </div>
 
-        <section class="signup-section">
-            <h2>Join the Waitlist</h2>
-            <p>Start implementing AI in your business. Free newsletter launching soon.</p>
-            
-            <form class="signup-form" id="signup-form">
-                <div class="form-group">
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        placeholder="Enter your business email" 
-                        required
-                    >
-                </div>
-                <button type="submit">Get AI Strategies</button>
-            </form>
+        <!-- Posts Section -->
+        <div class="posts-header">
+            <svg class="posts-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <h2 class="posts-title">Posts</h2>
+        </div>
 
-            <div id="message"></div>
-        </section>
+        <!-- Featured Post -->
+        <div id="featured-post-container"></div>
+
+        <!-- Post List -->
+        <div class="post-list" id="post-list"></div>
+
+        <!-- View More Button -->
+        <div class="view-more-section" id="view-more-section" style="display: none;">
+            <button class="view-more-btn" id="view-more-btn">View more posts</button>
+        </div>
+
+        <!-- Social Sharing Footer -->
+        <div class="social-footer">
+            <div class="share-section">
+                <span class="share-text">Share this page</span>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" id="twitter-share" target="_blank" rel="noopener noreferrer" title="Share on Twitter/X">𝕏</a>
+                    <a href="#" class="social-icon" id="facebook-share" target="_blank" rel="noopener noreferrer" title="Share on Facebook">f</a>
+                    <a href="#" class="social-icon" id="email-share" target="_blank" rel="noopener noreferrer" title="Share via Email">✉</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Post Detail -->
+    <div class="modal" id="post-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h2 class="modal-title" id="modal-title"></h2>
+            <div class="modal-meta" id="modal-meta"></div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
     </div>
 
     <script>
-        // Detect mobile devices
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        // Configuration
+        const POSTS_PER_PAGE = 5;
+        let allPosts = [];
+        let displayedPosts = 0;
 
-        // Optimize animations for mobile
-        if (isMobile) {
-            // Reduce floating word animations for better performance
-            const floatingWords = document.querySelectorAll('.floating-word');
-            floatingWords.forEach((word, index) => {
-                if (index > 3) {
-                    word.style.display = 'none';
-                }
-            });
+        // Load configuration and posts
+        async function init() {
+            await loadConfig();
+            await loadPosts();
+            setupSocialSharing();
         }
 
-        // Rotating text animation
-        const rotatingTexts = [
-            'Automate Operations',
-            'Cut Costs by 40%',
-            'Scale Your Business',
-            'Boost Productivity',
-            'Implement AI Tools',
-            'Transform Customer Service',
-            'Streamline Workflows'
-        ];
-        let currentIndex = 0;
-        const rotatingElement = document.getElementById('rotating-text');
-
-        function rotateText() {
-            rotatingElement.style.opacity = '0';
-            setTimeout(() => {
-                currentIndex = (currentIndex + 1) % rotatingTexts.length;
-                rotatingElement.textContent = rotatingTexts[currentIndex];
-                rotatingElement.style.opacity = '1';
-            }, 300);
-        }
-
-        // Add transition to rotating text
-        rotatingElement.style.transition = 'opacity 0.3s ease-in-out';
-
-        // Rotate text every 3 seconds (4 seconds on mobile for better readability)
-        setInterval(rotateText, isMobile ? 4000 : 3000);
-
-        // Fetch subscriber count
-        async function loadSubscriberCount() {
+        // Load configuration
+        async function loadConfig() {
             try {
-                const response = await fetch('/api/subscribers/count');
+                const response = await fetch('/api/config');
                 const data = await response.json();
-                document.getElementById('subscriber-count').textContent = data.count;
+                
+                if (data.success && data.config) {
+                    const cfg = data.config;
+                    document.getElementById('newsletter-title').textContent = cfg.name;
+                    document.getElementById('author-name').textContent = `by ${cfg.authorName}`;
+                    document.getElementById('newsletter-description').textContent = cfg.description;
+                    const profileImg = document.getElementById('profile-image');
+                    profileImg.src = cfg.authorImage;
+                    profileImg.alt = cfg.authorName;
+                }
             } catch (error) {
-                document.getElementById('subscriber-count').textContent = '800+';
+                console.error('Error loading config:', error);
             }
         }
 
-        // Handle form submission
+        // Load posts from API
+        async function loadPosts() {
+            try {
+                const response = await fetch('/api/posts');
+                const data = await response.json();
+                
+                if (data.success && data.posts) {
+                    allPosts = data.posts;
+                    displayPosts();
+                } else {
+                    showEmptyState();
+                }
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                showEmptyState();
+            }
+        }
+
+        // Display posts
+        function displayPosts() {
+            const featuredContainer = document.getElementById('featured-post-container');
+            const postList = document.getElementById('post-list');
+            const viewMoreSection = document.getElementById('view-more-section');
+
+            if (allPosts.length === 0) {
+                showEmptyState();
+                return;
+            }
+
+            // Display featured post (first one)
+            const featured = allPosts[0];
+            featuredContainer.innerHTML = createFeaturedPostHTML(featured);
+
+            // Display other posts
+            const others = allPosts.slice(1);
+            displayedPosts = Math.min(POSTS_PER_PAGE, others.length);
+            
+            postList.innerHTML = '';
+            for (let i = 0; i < displayedPosts; i++) {
+                postList.innerHTML += createPostItemHTML(others[i]);
+            }
+
+            // Show "View more" button if there are more posts
+            if (others.length > displayedPosts) {
+                viewMoreSection.style.display = 'block';
+            } else {
+                viewMoreSection.style.display = 'none';
+            }
+
+            // Attach event listeners
+            attachPostListeners();
+        }
+
+        // Create featured post HTML
+        function createFeaturedPostHTML(post) {
+            const imageUrl = getPostImage(post);
+            return `
+                <div class="featured-post">
+                    <div class="featured-content">
+                        <span class="featured-badge">Featured Post</span>
+                        <h3 class="featured-title">${escapeHtml(post.title)}</h3>
+                        <p class="featured-preview">${escapeHtml(post.previewText)}</p>
+                        <div class="featured-actions">
+                            <a href="#" class="read-now-btn" data-post-id="${post.id}">Read now</a>
+                            <div class="post-meta">${post.daysAgoText} • ${post.readTime} min read</div>
+                        </div>
+                    </div>
+                    <img src="${imageUrl}" alt="${escapeHtml(post.title)}" class="featured-image" onerror="this.style.display='none'">
+                </div>
+            `;
+        }
+
+        // Create post item HTML
+        function createPostItemHTML(post) {
+            const imageUrl = getPostImage(post);
+            return `
+                <div class="post-item" data-post-id="${post.id}">
+                    <img src="${imageUrl}" alt="${escapeHtml(post.title)}" class="post-image" onerror="this.style.display='none'">
+                    <div class="post-content">
+                        <h3 class="post-title">${escapeHtml(post.title)}</h3>
+                        <p class="post-preview">${escapeHtml(post.previewText)}</p>
+                        <div class="post-meta">${post.daysAgoText} • ${post.readTime} min read</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Get post image
+        function getPostImage(post) {
+            // First, check if post has an imageUrl
+            if (post.imageUrl) {
+                return post.imageUrl;
+            }
+            
+            // Fallback to placeholder
+            const titleText = post.title.substring(0, 20).replace(/[^a-zA-Z0-9\s]/g, '');
+            return `https://via.placeholder.com/300x200/f5f5f5/999?text=${encodeURIComponent(titleText || 'Newsletter')}`;
+        }
+
+        // Attach event listeners to posts
+        function attachPostListeners() {
+            document.querySelectorAll('[data-post-id]').forEach(element => {
+                element.addEventListener('click', (e) => {
+                    const postId = element.getAttribute('data-post-id') || 
+                                 element.closest('[data-post-id]')?.getAttribute('data-post-id');
+                    if (postId) {
+                        openPostModal(postId);
+                    }
+                });
+            });
+        }
+
+        // Open post modal
+        async function openPostModal(postId) {
+            try {
+                const response = await fetch(`/api/posts/${postId}`);
+                const data = await response.json();
+                
+                if (data.success && data.post) {
+                    const post = data.post;
+                    document.getElementById('modal-title').textContent = post.title;
+                    document.getElementById('modal-meta').textContent = 
+                        `${post.daysAgoText} • ${post.readTime} min read`;
+                    document.getElementById('modal-body').innerHTML = post.contentHTML || post.content;
+                    document.getElementById('post-modal').classList.add('active');
+                }
+            } catch (error) {
+                console.error('Error loading post:', error);
+                alert('Error loading post. Please try again.');
+            }
+        }
+
+        // Close modal
+        document.getElementById('modal-close').addEventListener('click', () => {
+            document.getElementById('post-modal').classList.remove('active');
+        });
+
+        document.getElementById('post-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'post-modal') {
+                document.getElementById('post-modal').classList.remove('active');
+            }
+        });
+
+        // View more posts
+        document.getElementById('view-more-btn').addEventListener('click', () => {
+            const others = allPosts.slice(1);
+            const postList = document.getElementById('post-list');
+            const viewMoreSection = document.getElementById('view-more-section');
+
+            const nextBatch = others.slice(displayedPosts, displayedPosts + POSTS_PER_PAGE);
+            nextBatch.forEach(post => {
+                postList.innerHTML += createPostItemHTML(post);
+            });
+
+            displayedPosts += nextBatch.length;
+            attachPostListeners();
+
+            if (displayedPosts >= others.length) {
+                viewMoreSection.style.display = 'none';
+            }
+        });
+
+        // Handle signup form
         document.getElementById('signup-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const form = e.target;
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email-input').value;
+            const submitBtn = document.getElementById('subscribe-btn');
             const messageDiv = document.getElementById('message');
-            const submitBtn = form.querySelector('button[type="submit"]');
             
-            // Disable button and show loading
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Joining...';
+            submitBtn.textContent = 'Subscribing...';
             messageDiv.innerHTML = '';
-            
+
             try {
                 const response = await fetch('/api/subscribe', {
                     method: 'POST',
@@ -741,10 +848,8 @@
                 
                 if (data.success) {
                     messageDiv.className = 'message success';
-                    messageDiv.textContent = '🎉 Welcome! Check your email for confirmation.';
-                    form.reset();
-                    // Reload count
-                    loadSubscriberCount();
+                    messageDiv.textContent = 'Successfully subscribed!';
+                    document.getElementById('signup-form').reset();
                 } else {
                     messageDiv.className = 'message error';
                     messageDiv.textContent = data.message || 'Something went wrong. Please try again.';
@@ -754,12 +859,42 @@
                 messageDiv.textContent = 'Network error. Please try again.';
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Get AI Strategies';
+                submitBtn.textContent = 'Subscribe';
             }
         });
 
-        // Load subscriber count on page load
-        loadSubscriberCount();
+        // Setup social sharing
+        function setupSocialSharing() {
+            const currentUrl = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            const text = encodeURIComponent('Check out this newsletter');
+
+            document.getElementById('twitter-share').href = 
+                `https://twitter.com/intent/tweet?url=${currentUrl}&text=${text}`;
+            
+            document.getElementById('facebook-share').href = 
+                `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
+            
+            document.getElementById('email-share').href = 
+                `mailto:?subject=${title}&body=${text}%20${currentUrl}`;
+        }
+
+        // Show empty state
+        function showEmptyState() {
+            document.getElementById('featured-post-container').innerHTML = 
+                '<div class="empty-state">No posts available yet.</div>';
+            document.getElementById('post-list').innerHTML = '';
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Initialize on load
+        init();
     </script>
 </body>
 </html>

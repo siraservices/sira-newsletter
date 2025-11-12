@@ -4,11 +4,14 @@ import { dirname, join } from 'path';
 import subscriberDB from '../database/subscribers.js';
 import logger from '../utils/logger.js';
 import config from '../utils/config.js';
+import { getPublishedNewsletters, getNewsletterById } from '../utils/newsletter-utils.js';
+import { marked } from 'marked';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
-const PORT = process.env.HOME_PORT || 3002;
+// Railway uses PORT env var, fallback to HOME_PORT or default 3002
+const PORT = process.env.PORT || process.env.HOME_PORT || 3002;
 
 // Middleware
 app.use(express.json());
@@ -80,6 +83,79 @@ app.post('/api/subscribe', (req, res) => {
     res.status(500).json({ 
       success: false,
       message: 'An error occurred. Please try again later.' 
+    });
+  }
+});
+
+// API endpoint to get newsletter config
+app.get('/api/config', (req, res) => {
+  try {
+    res.json({
+      success: true,
+      config: {
+        name: config.get('newsletter.name') || 'AI Business Newsletter',
+        description: config.get('newsletter.description') || 'Learn how to implement AI in your business.',
+        authorName: config.get('email.fromName') || 'Julio',
+        authorImage: config.get('newsletter.authorImage') || '/profile.jpg'
+      }
+    });
+  } catch (error) {
+    logger.error('Error fetching config:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch config'
+    });
+  }
+});
+
+// API endpoint to get all posts
+app.get('/api/posts', (req, res) => {
+  try {
+    const posts = getPublishedNewsletters();
+    res.json({
+      success: true,
+      posts,
+      featured: posts.length > 0 ? posts[0] : null,
+      others: posts.slice(1)
+    });
+  } catch (error) {
+    logger.error('Error fetching posts:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch posts'
+    });
+  }
+});
+
+// API endpoint to get a specific post by ID
+app.get('/api/posts/:id', (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = getNewsletterById(id);
+    
+    if (!post) {
+      return res.status(404).json({
+        success: false,
+        error: 'Post not found'
+      });
+    }
+    
+    // Render markdown to HTML
+    marked.setOptions({ gfm: true, breaks: true });
+    const contentHTML = marked.parse(post.content);
+    
+    res.json({
+      success: true,
+      post: {
+        ...post,
+        contentHTML
+      }
+    });
+  } catch (error) {
+    logger.error('Error fetching post:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch post'
     });
   }
 });

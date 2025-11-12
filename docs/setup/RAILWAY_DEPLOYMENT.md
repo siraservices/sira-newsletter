@@ -4,12 +4,17 @@ This guide walks you through deploying your newsletter unsubscribe server to Rai
 
 ## Overview
 
-Your unsubscribe functionality requires a live server that subscribers can access from anywhere. Railway.app provides:
+Your newsletter system requires two live servers:
+1. **Home Server** - Newsletter signup page with posts (`src/home/server.js`)
+2. **Subscription Server** - Unsubscribe functionality (`src/subscription/server.js`)
+
+Railway.app provides:
 - ✅ Free tier with $5/month credit
 - ✅ Automatic deployments from GitHub
 - ✅ Persistent storage for SQLite database
 - ✅ HTTPS by default
 - ✅ Environment variable management
+- ✅ Multi-service support
 
 ## Prerequisites
 
@@ -37,29 +42,75 @@ git push origin main
 4. Choose your `sira-newsletter` repository
 5. Railway will automatically detect it's a Node.js project
 
+### 2a. Set Up Multiple Services
+
+You need **two services** in Railway:
+
+**Service 1: Home Server (Newsletter Signup Page)**
+1. In Railway dashboard, click **"+ New"** → **"Service"**
+2. Select **"GitHub Repo"** → Choose your repository
+3. In service settings, go to **"Settings"** → **"Deploy"**
+4. Set **Start Command** to: `node src/home/server.js`
+5. Or use the `railway-home.json` config file
+
+**Service 2: Subscription Server (Unsubscribe)**
+1. Create another service (same repository)
+2. Set **Start Command** to: `node src/subscription/server.js`
+3. Or use the existing `railway.json` config file
+
 ### 3. Configure Environment Variables
 
-In your Railway project dashboard:
+**For Home Server:**
+1. Click on your **Home Server** service
+2. Go to **"Variables"** tab
+3. Railway automatically sets `PORT` - no action needed
+4. Optional: Set `NODE_ENV=production`
 
-1. Click on your service
-2. Go to the **"Variables"** tab
-3. Add the following environment variable:
+**For Subscription Server:**
+1. Click on your **Subscription Server** service
+2. Go to **"Variables"** tab
+3. Add:
+   ```
+   SUBSCRIPTION_BASE_URL=https://your-subscription-service.up.railway.app
+   ```
+4. Get the URL from Subscription Server's **"Settings"** → **"Domains"**
 
-```
-SUBSCRIPTION_BASE_URL=https://your-app-name.up.railway.app
-```
+**Note:** Each service gets its own Railway URL. Use the Subscription Server URL for `SUBSCRIPTION_BASE_URL`.
 
-**Note:** Replace `your-app-name` with your actual Railway app URL (you can find this in the "Settings" tab under "Domains")
+### 4. Set Up Custom Domains (Optional)
 
-### 4. Set Up Custom Domain (Optional)
+Railway provides free subdomains for each service. You can add custom domains:
 
-Railway provides a free subdomain, but you can add a custom domain:
+**For Home Server:**
+1. Go to **Home Server** → **Settings** → **Domains**
+2. Click **"Generate Domain"** for Railway subdomain (e.g., `your-newsletter.up.railway.app`)
+3. Or add **"Custom Domain"** (e.g., `newsletter.yourdomain.com`)
 
-1. Go to **Settings** → **Domains**
-2. Click **"Generate Domain"** for a Railway subdomain
-3. Or click **"Custom Domain"** to add your own domain
+**For Subscription Server:**
+1. Go to **Subscription Server** → **Settings** → **Domains**
+2. Generate domain or add custom domain
+3. **Important:** Update `SUBSCRIPTION_BASE_URL` environment variable with this URL
 
-### 5. Upload Database
+### 5. Configure Persistent Storage
+
+Both services need access to shared data:
+
+**Option A: Use Railway Volumes (Recommended)**
+1. In Railway dashboard, go to **"Volumes"**
+2. Create volumes for:
+   - `/app/data` - For subscriber database
+   - `/app/drafts` - For newsletter drafts (optional, can use git)
+   - `/app/src/home/public/images/posts` - For post images (optional, can use git)
+
+**Option B: Include in Git (Simple)**
+Include these in your git repository:
+- `data/subscribers.db` - Subscriber database
+- `drafts/*.json` - Newsletter drafts (sent newsletters)
+- `src/home/public/images/posts/*` - Post images
+
+**Note:** For production, volumes are recommended for data persistence.
+
+### 6. Upload Database
 
 Your subscriber database needs to be on Railway. There are two options:
 
@@ -95,37 +146,54 @@ railway link
 railway run --volume data:/app/data cp data/subscribers.db /app/data/
 ```
 
-### 6. Deploy
+### 7. Deploy
 
 Railway automatically deploys when you push to GitHub. You can also:
 
 1. Manually trigger deployment from the Railway dashboard
 2. Click **"Deploy"** → **"Redeploy"**
 
-### 7. Verify Deployment
+### 8. Verify Deployment
 
+**Home Server:**
 1. Check deployment logs in Railway dashboard
-2. Visit your unsubscribe URL:
+2. Visit your home page URL:
    ```
-   https://your-app-name.up.railway.app/unsubscribe?token=TEST
+   https://your-home-service.up.railway.app
+   ```
+3. You should see the newsletter signup page with posts
+
+**Subscription Server:**
+1. Check deployment logs
+2. Visit unsubscribe URL:
+   ```
+   https://your-subscription-service.up.railway.app/unsubscribe?token=TEST
    ```
 3. You should see the unsubscribe page (it will show "Invalid token" which is expected)
 
 ## Update Local Configuration
 
-Update your local `config.json` to use the Railway URL for production:
+Update your local `config.json` with production URLs:
 
 ```json
 {
   "subscription": {
     "port": 3001,
-    "baseUrl": "https://your-app-name.up.railway.app",
+    "baseUrl": "https://your-subscription-service.up.railway.app",
     "useDatabase": true
+  },
+  "newsletter": {
+    "name": "Your Newsletter Name",
+    "description": "Your newsletter description",
+    "authorImage": "/profile.jpg"
   }
 }
 ```
 
-**Important:** Keep `baseUrl` pointing to your Railway URL. The environment variable `SUBSCRIPTION_BASE_URL` will override this in production, but this ensures your local testing still works.
+**Important:** 
+- `subscription.baseUrl` should point to your **Subscription Server** Railway URL
+- The environment variable `SUBSCRIPTION_BASE_URL` will override this in production
+- Home server uses its own Railway URL automatically
 
 ## Testing
 
