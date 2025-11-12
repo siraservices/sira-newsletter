@@ -1,6 +1,5 @@
 node_modules/
 .env
-drafts/
 logs/
 credentials.json
 token.json
@@ -9,6 +8,9 @@ token.json
 .vscode/
 .idea/
 
-# Data folder - but allow database for Railway deployment
+# Data folder - but allow database for deployment
 data/
 !data/subscribers.db
+
+# Allow drafts folder for Netlify (functions need to read from it)
+# drafts/ - commented out to allow drafts in repo for Netlify

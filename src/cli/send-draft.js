@@ -83,7 +83,7 @@ async function sendDraft() {
       
       console.log(chalk.green('✅ Newsletter sent successfully!\n'));
       console.log(chalk.blue(`Check inbox: ${recipient}\n`));
-      console.log(chalk.dim('📝 Draft status updated to "sent" - will appear on home page\n'));
+      console.log(chalk.dim('📝 Newsletter status updated to "sent" - it will appear on the website\n'));
     } else {
       console.log(chalk.red('❌ Failed to send newsletter\n'));
       console.log(chalk.red('Error:', results[0].error, '\n'));

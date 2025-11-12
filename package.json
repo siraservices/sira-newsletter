@@ -20,7 +20,8 @@
     "manage-subscribers": "node src/subscription/manage.js",
     "import-csv": "node src/subscription/import-csv.js",
     "word-count-report": "node src/cli/word-count-report.js",
-    "check-unsubscribes": "node src/cli/check-unsubscribes.js"
+    "check-unsubscribes": "node src/cli/check-unsubscribes.js",
+    "netlify:dev": "netlify dev"
   },
   "keywords": [
     "newsletter",

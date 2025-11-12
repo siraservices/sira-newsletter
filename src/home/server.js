@@ -10,8 +10,7 @@ import { marked } from 'marked';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
-// Railway uses PORT env var, fallback to HOME_PORT or default 3002
-const PORT = process.env.PORT || process.env.HOME_PORT || 3002;
+const PORT = process.env.HOME_PORT || 3002;
 
 // Middleware
 app.use(express.json());
@@ -93,7 +92,7 @@ app.get('/api/config', (req, res) => {
     res.json({
       success: true,
       config: {
-        name: config.get('newsletter.name') || 'AI Business Newsletter',
+        name: config.get('newsletter.name') || 'DeepHealth',
         description: config.get('newsletter.description') || 'Learn how to implement AI in your business.',
         authorName: config.get('email.fromName') || 'Julio',
         authorImage: config.get('newsletter.authorImage') || '/profile.jpg'

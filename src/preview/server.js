@@ -1,5 +1,5 @@
 import express from 'express';
-import { readFileSync, existsSync, readdirSync } from 'fs';
+import { readFileSync, existsSync, readdirSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import open from 'open';
@@ -78,10 +78,22 @@ export class PreviewServer {
         
         console.log(chalk.yellow('\n📤 Sending newsletter...\n'));
         
-        const results = await sendNewsletter(prepareNewsletterData(this.draft));
+        const results = await sendNewsletter(prepareNewsletterData(this.draft), this.draft);
         
         const successCount = results.filter(r => r.success).length;
-        console.log(chalk.green(`✅ Newsletter sent to ${successCount}/${results.length} recipients\n`));
+        
+        if (successCount > 0) {
+          // Update draft status to "sent"
+          this.draft.metadata.status = 'sent';
+          this.draft.metadata.sentAt = new Date().toISOString();
+          this.draft.metadata.sentResults = results;
+          writeFileSync(this.draftPath, JSON.stringify(this.draft, null, 2));
+          
+          console.log(chalk.green(`✅ Newsletter sent to ${successCount}/${results.length} recipients\n`));
+          console.log(chalk.dim('📝 Newsletter status updated to "sent" - it will appear on the website\n'));
+        } else {
+          console.log(chalk.red('❌ Newsletter send failed - status not updated\n'));
+        }
         
         res.json({ 
           success: true, 

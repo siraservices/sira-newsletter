@@ -18,8 +18,6 @@ export async function consolidateNewsletter(plan, sections, tone, topic) {
     // Hormozi-specific format
     prompt = `🚨 YOU ARE ALEX HORMOZI - WRITE NEWSLETTER WITH STRICT WORD COUNT 🚨
 
-**Words I like:** [punchy quote about ${topic}]
-
 **[Create a compelling title about ${topic} - be specific with numbers or results]**
 
 [Brief personal story or context in 1-2 sentences with specific numbers]
@@ -114,19 +112,25 @@ Output the complete newsletter in markdown format.`;
 export async function generateTitle(content, topic) {
   logger.info('Generating title');
 
+  const newsletterName = config.get('newsletter.name') || 'DeepHealth';
+  
   const prompt = `Create a compelling newsletter subject line for this content.
 
 Topic: ${topic}
+Newsletter Name: ${newsletterName}
 
 Content preview:
 ${content.substring(0, 500)}...
 
 Requirements:
-- Under 60 characters (ideal for email preview)
+- Start with "${newsletterName}: " prefix
+- Under 60 characters total (ideal for email preview)
 - Intriguing and click-worthy
 - Specific and clear
 - No clickbait
 - Numbers or specific claims work well
+
+Format: ${newsletterName}: [compelling subject line]
 
 Output ONLY the subject line, nothing else.`;
 

@@ -1,7 +1,7 @@
-# Home Page - AI Business Newsletter
+# Home Page - DeepHealth
 
 ## Overview
-A dynamic, animated landing page for AI business newsletter signups with live subscriber count and engaging visual effects.
+A dynamic, animated landing page for DeepHealth newsletter signups with live subscriber count and engaging visual effects.
 
 ## Features
 - 🎨 Modern grayscale design with Inter font
