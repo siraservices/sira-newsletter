@@ -113,7 +113,7 @@ export async function generateTitle(content, topic) {
   logger.info('Generating title');
 
   const newsletterName = config.get('newsletter.name') || 'DeepHealth';
-  
+
   const prompt = `Create a compelling newsletter subject line for this content.
 
 Topic: ${topic}
