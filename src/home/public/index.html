@@ -764,6 +764,8 @@
         function attachPostListeners() {
             document.querySelectorAll('[data-post-id]').forEach(element => {
                 element.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                     const postId = element.getAttribute('data-post-id') || 
                                  element.closest('[data-post-id]')?.getAttribute('data-post-id');
                     if (postId) {
@@ -776,16 +778,29 @@
         // Open post modal
         async function openPostModal(postId) {
             try {
+                console.log('Opening post modal for:', postId);
                 const response = await fetch(`/api/posts/${postId}`);
                 const data = await response.json();
                 
                 if (data.success && data.post) {
                     const post = data.post;
-                    document.getElementById('modal-title').textContent = post.title;
-                    document.getElementById('modal-meta').textContent = 
-                        `${post.daysAgoText} • ${post.readTime} min read`;
-                    document.getElementById('modal-body').innerHTML = post.contentHTML || post.content;
-                    document.getElementById('post-modal').classList.add('active');
+                    const modal = document.getElementById('post-modal');
+                    const modalTitle = document.getElementById('modal-title');
+                    const modalMeta = document.getElementById('modal-meta');
+                    const modalBody = document.getElementById('modal-body');
+                    
+                    if (modal && modalTitle && modalMeta && modalBody) {
+                        modalTitle.textContent = post.title;
+                        modalMeta.textContent = `${post.daysAgoText} • ${post.readTime} min read`;
+                        modalBody.innerHTML = post.contentHTML || post.content;
+                        modal.classList.add('active');
+                        console.log('Modal opened successfully');
+                    } else {
+                        console.error('Modal elements not found');
+                    }
+                } else {
+                    console.error('Failed to load post:', data);
+                    alert('Error loading post. Please try again.');
                 }
             } catch (error) {
                 console.error('Error loading post:', error);
@@ -794,34 +809,51 @@
         }
 
         // Close modal
-        document.getElementById('modal-close').addEventListener('click', () => {
-            document.getElementById('post-modal').classList.remove('active');
-        });
+        const modalClose = document.getElementById('modal-close');
+        const postModal = document.getElementById('post-modal');
+        
+        if (modalClose) {
+            modalClose.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (postModal) {
+                    postModal.classList.remove('active');
+                }
+            });
+        }
 
-        document.getElementById('post-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'post-modal') {
-                document.getElementById('post-modal').classList.remove('active');
-            }
-        });
+        if (postModal) {
+            postModal.addEventListener('click', (e) => {
+                if (e.target.id === 'post-modal') {
+                    e.preventDefault();
+                    postModal.classList.remove('active');
+                }
+            });
+        }
 
         // View more posts
-        document.getElementById('view-more-btn').addEventListener('click', () => {
-            const others = allPosts.slice(1);
-            const postList = document.getElementById('post-list');
-            const viewMoreSection = document.getElementById('view-more-section');
+        const viewMoreBtn = document.getElementById('view-more-btn');
+        if (viewMoreBtn) {
+            viewMoreBtn.addEventListener('click', () => {
+                const others = allPosts.slice(1);
+                const postList = document.getElementById('post-list');
+                const viewMoreSection = document.getElementById('view-more-section');
 
-            const nextBatch = others.slice(displayedPosts, displayedPosts + POSTS_PER_PAGE);
-            nextBatch.forEach(post => {
-                postList.innerHTML += createPostItemHTML(post);
+                const nextBatch = others.slice(displayedPosts, displayedPosts + POSTS_PER_PAGE);
+                nextBatch.forEach(post => {
+                    postList.innerHTML += createPostItemHTML(post);
+                });
+
+                displayedPosts += nextBatch.length;
+                
+                // Re-attach event listeners for new posts
+                attachPostListeners();
+
+                if (displayedPosts >= others.length) {
+                    viewMoreSection.style.display = 'none';
+                }
             });
-
-            displayedPosts += nextBatch.length;
-            attachPostListeners();
-
-            if (displayedPosts >= others.length) {
-                viewMoreSection.style.display = 'none';
-            }
-        });
+        }
 
         // Handle signup form
         document.getElementById('signup-form').addEventListener('submit', async (e) => {
