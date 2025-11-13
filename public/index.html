@@ -764,6 +764,7 @@
         function attachPostListeners() {
             document.querySelectorAll('[data-post-id]').forEach(element => {
                 element.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent default link/navigation behavior
                     const postId = element.getAttribute('data-post-id') || 
                                  element.closest('[data-post-id]')?.getAttribute('data-post-id');
                     if (postId) {
