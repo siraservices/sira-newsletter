@@ -43,6 +43,10 @@ export const handler = async (event, context) => {
     // Get ID from query string or path
     const id = event.queryStringParameters?.id || event.pathParameters?.id;
     
+    console.log('Requested post ID:', id);
+    console.log('Query params:', event.queryStringParameters);
+    console.log('Path params:', event.pathParameters);
+    
     if (!id) {
       return {
         statusCode: 400,
@@ -55,22 +59,28 @@ export const handler = async (event, context) => {
     }
 
     const draftsDir = getDraftsDir();
+    console.log('Drafts directory:', draftsDir);
     
     if (!existsSync(draftsDir)) {
+      console.error('Drafts directory does not exist');
       return {
         statusCode: 404,
         headers,
         body: JSON.stringify({
           success: false,
-          error: 'Post not found'
+          error: 'Drafts directory not found'
         })
       };
     }
 
     const files = readdirSync(draftsDir).filter(f => f.endsWith('.json'));
+    console.log('Found files:', files.length);
     
+    const postIds = [];
     for (const filename of files) {
       const postId = getIdFromFilename(filename);
+      postIds.push({filename, postId});
+      console.log(`Checking: ${filename} -> ${postId} (match: ${postId === id})`);
       if (postId === id) {
         const filePath = join(draftsDir, filename);
         const content = readFileSync(filePath, 'utf-8');
@@ -117,12 +127,15 @@ export const handler = async (event, context) => {
       }
     }
 
+    console.error('Post not found. Available posts:', postIds);
     return {
       statusCode: 404,
       headers,
       body: JSON.stringify({
         success: false,
-        error: 'Post not found'
+        error: 'Post not found',
+        requestedId: id,
+        availableIds: postIds.map(p => p.postId)
       })
     };
   } catch (error) {
