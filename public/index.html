@@ -776,17 +776,28 @@
 
         // Open post modal
         async function openPostModal(postId) {
+            console.log('Opening modal for post:', postId);
             try {
                 const response = await fetch(`/api/posts/${postId}`);
+                console.log('API response status:', response.status);
                 const data = await response.json();
+                console.log('API data:', data);
                 
                 if (data.success && data.post) {
                     const post = data.post;
+                    console.log('Post loaded successfully:', post.title);
                     document.getElementById('modal-title').textContent = post.title;
                     document.getElementById('modal-meta').textContent = 
                         `${post.daysAgoText} • ${post.readTime} min read`;
                     document.getElementById('modal-body').innerHTML = post.contentHTML || post.content;
-                    document.getElementById('post-modal').classList.add('active');
+                    const modal = document.getElementById('post-modal');
+                    console.log('Modal element:', modal);
+                    console.log('Adding active class to modal');
+                    modal.classList.add('active');
+                    console.log('Modal classes after add:', modal.className);
+                } else {
+                    console.error('API returned unsuccessful response or no post:', data);
+                    alert('Post not found. Please try again.');
                 }
             } catch (error) {
                 console.error('Error loading post:', error);
