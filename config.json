@@ -15,7 +15,7 @@
     "companyName": "Aira Development, LLC",
     "companyAddress": "1032 Charles Ave Charlotte, NC",
     "recipients": [],
-    "testMode": true,
+    "testMode": false,
     "testRecipient": "julioaira4@gmail.com"
   },
   "search": {
